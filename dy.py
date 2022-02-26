@@ -5,7 +5,7 @@ while True:
     #检查视频链接
     while True:
         print('请输入视频链接！')
-        url = input()  # 链接地址
+        url = input()  # 链接地址 https://v.douyin.com/XJj85H/
         try:
             real_address = request.urlopen(url).geturl()#获取跳转url
             number = re.findall(r'(\w*[0-9]+)\w*',real_address)#提取视频id
@@ -19,7 +19,7 @@ while True:
     addresss = 'https://www.douyin.com/web/api/v2/aweme/iteminfo/?item_ids={}'.format(''.join(number))#拼接网址
     res = requests.get(addresss, headers=headers)#请求拼接网址
     video_info = res.json()#解析内容
-    video_url = video_info['item_list'][0]['video']['play_addr']['url_list'][0]#获取无水印链接地址
+    video_url = video_info['item_list'][0]['video']['play_addr']['url_list'][0].replace("playwm", "play")#获取无水印链接地址
     video_name = video_info['item_list'][0]['desc']#获取视频标题
     video = requests.get(video_url, headers=headers)#抓取视频
     # 获取桌面路径
